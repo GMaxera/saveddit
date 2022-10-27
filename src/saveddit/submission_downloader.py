@@ -20,12 +20,11 @@ import youtube_dl
 
 
 class SubmissionDownloader:
-    def __init__(self, submission, submission_index, logger, output_dir, skip_videos, skip_meta, skip_comments, comment_limit, config):
+    def __init__(self, submission, logger, output_dir, skip_videos, skip_meta, skip_comments, comment_limit, config):
         self.IMGUR_CLIENT_ID = config["imgur_client_id"]
 
         self.logger = logger
-        i = submission_index
-        prefix_str = '#' + str(i).zfill(3) + ' '
+        prefix_str = f'# {submission.id} '
         self.indent_1 = ' ' * len(prefix_str) + "* "
         self.indent_2 = ' ' * len(self.indent_1) + "- "
 
@@ -41,7 +40,7 @@ class SubmissionDownloader:
                 title += "..."
 
             # Prepare directory for the submission
-            post_dir = str(i).zfill(3) + "_" + title.replace(" ", "_")
+            post_dir = f"{submission.id}_{title.replace(' ', '_')}"
             submission_dir = os.path.join(output_dir, post_dir)
             if not os.path.exists(submission_dir):
                 os.makedirs(submission_dir)

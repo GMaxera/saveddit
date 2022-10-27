@@ -3,6 +3,7 @@ from colorama import Fore
 import logging
 import verboselogs
 import os
+import sys
 import praw
 from saveddit.configuration import ConfigurationLoader
 from saveddit.submission_downloader import SubmissionDownloader
@@ -68,7 +69,7 @@ class SubredditDownloader:
                 os.makedirs(category_dir)
             category_function = getattr(self.subreddit, c)
 
-            for i, submission in enumerate(category_function(limit=post_limit)):
-                SubmissionDownloader(submission, i, self.logger, category_dir,
+            for submission in category_function(limit=post_limit):
+                SubmissionDownloader(submission, self.logger, category_dir,
                     skip_videos, skip_meta, skip_comments, comment_limit,
                     {'imgur_client_id': SubredditDownloader.IMGUR_CLIENT_ID})
