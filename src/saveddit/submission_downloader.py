@@ -280,9 +280,13 @@ class SubmissionDownloader:
             if crosspost_parent_list != None:
                 self.logger.spam(
                     self.indent_2 + "This is a crosspost to a reddit gallery")
-                first_parent = crosspost_parent_list[0]
-                gallery_data = first_parent["gallery_data"]
-                media_metadata = first_parent["media_metadata"]
+                try:
+                    first_parent = crosspost_parent_list[0]
+                    gallery_data = first_parent["gallery_data"]
+                    media_metadata = first_parent["media_metadata"]
+                except Exception as e:
+                    self.print_formatted_error(e)
+                    return
 
         if gallery_data != None and media_metadata != None:
             image_count = len(gallery_data["items"])
