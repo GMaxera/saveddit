@@ -140,3 +140,6 @@ cython_debug/
 
 # Configuration file
 **/user_config.yaml
+
+# JetBrains IDE
+.idea
