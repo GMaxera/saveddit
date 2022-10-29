@@ -52,8 +52,12 @@ class SubredditDownloader:
         comment_limit: Number of comment levels to download from submission (default: `0`, i.e., only top-level comments)
           - to get all comments, set comment_limit to `None`
         '''
-        root_dir = os.path.join(os.path.join(os.path.join(
-            output_path, "www.reddit.com"), "r"), self.subreddit_name)
+        flat_dir = True
+        if flat_dir:
+            root_dir = os.path.join(output_path, self.subreddit_name)
+        else:
+            root_dir = os.path.join(os.path.join(os.path.join(
+                output_path, "www.reddit.com"), "r"), self.subreddit_name)
         categories = categories
         
         if download_all_comments == False:
@@ -64,7 +68,7 @@ class SubredditDownloader:
         for c in categories:
             self.logger.notice("Downloading from /r/" +
                                self.subreddit_name + "/" + c + "/")
-            category_dir = os.path.join(root_dir, c)
+            category_dir = os.path.join(root_dir, c) if not flat_dir else root_dir
             if not os.path.exists(category_dir):
                 os.makedirs(category_dir)
             category_function = getattr(self.subreddit, c)
