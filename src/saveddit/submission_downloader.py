@@ -37,7 +37,7 @@ class SubmissionDownloader:
             # Truncate title
             if len(title) > 32:
                 title = title[0:32]
-                title += "..."
+                # title += "..."
 
             # Prepare directory for the submission
             post_dir = f"{submission.id}_{title.replace(' ', '_')}"
